@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles';
 
-function Main() {
+function Login() {
   return <div />;
 }
 
-export default Main;
+export default Login;
