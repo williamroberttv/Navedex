@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles';
+// import './styles';
 
 function EditNaver() {
   return <div />;
