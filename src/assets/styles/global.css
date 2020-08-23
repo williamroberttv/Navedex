@@ -1,5 +1,6 @@
 :root {
-  --color-background: #ffffff;
+  --color-background: #fffff;
+  --color-background-secundary: #ffffff;
   --color-primary: #212121;
   --color-text-primary: #212121;
   --color-text-secondary: #ffffff;
@@ -28,6 +29,8 @@ body {
 
 label {
   font-size: 14px;
+  margin-bottom: 5px;
+  width: 250px;
 }
 
 button,
@@ -35,15 +38,30 @@ input {
   outline: none;
   font-size: 1.6rem;
 }
-
+button {
+  border: none;
+  width: 175px;
+  height: 40px;
+  background-color: var(--color-primary);
+  font-size: 14px;
+  color: #fff;
+  transition: 0.3s;
+}
 button:hover {
   cursor: pointer;
+  opacity: 0.9;
 }
 
 input {
   border: 1px solid var(--color-border);
+  padding-left: 8px;
 }
 
 input::placeholder {
   color: var(--color-text-placeholder);
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-primary);
 }
