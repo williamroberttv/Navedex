@@ -41,3 +41,13 @@
   border: 1px solid var(--color-primary);
   color: var(--color-text);
 }
+@media (max-width: 1232px) {
+  .modal-delete {
+    height: 25vh;
+  }
+}
+@media (max-width: 938px) {
+  .modal-delete {
+    width: 34vh;
+  }
+}

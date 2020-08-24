@@ -3,7 +3,7 @@ import { useField } from '@unform/core';
 
 function Input({ name, title, ...rest }) {
   const inputRef = useRef(null);
-  const { fieldName, registerField } = useField(name);
+  const { fieldName, registerField, error } = useField(name);
 
   useEffect(() => {
     registerField({
@@ -17,6 +17,11 @@ function Input({ name, title, ...rest }) {
     <div className="input-section">
       <label htmlFor={name}>{title}</label>
       <input ref={inputRef} placeholder={title} {...rest} />
+      {error && (
+        <span style={{ color: '#f00', fontSize: '1.4rem', marginTop: 10 }}>
+          {error}
+        </span>
+      )}
     </div>
   );
 }

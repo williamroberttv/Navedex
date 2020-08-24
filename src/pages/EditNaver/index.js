@@ -1,16 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as moment from 'moment';
+import * as Yup from 'yup';
+
+import { schema } from '../../utils/schema';
 import { useNaver } from '../../context/ContextProvider';
 import api from '../../services/api';
 import FormComponent from '../../components/FormComponent';
 import ModalConfirm from '../../components/ModalConfirm';
+import { useHistory } from 'react-router-dom';
 
 function EditNaver() {
-  const [modalOpen, setModalOpen] = useState(false);
+  const history = useHistory();
   const formRef = useRef();
   const { naver } = useNaver();
   const storagedId = localStorage.getItem('id');
   const token = localStorage.getItem('token');
+  const [modalOpen, setModalOpen] = useState(false);
   const [naverInfo, setNaverInfo] = useState({});
 
   async function changeValue(dataToTransform, dataToSubmit, setToFalse) {
@@ -37,25 +42,38 @@ function EditNaver() {
   }
 
   async function handleSubmit(data) {
-    const { name, project, url, job_role, birthdate, admission_date } = data;
-
-    const dataPost = {
-      job_role,
-      admission_date,
-      birthdate,
-      project,
-      name,
-      url,
-    };
     try {
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      const { name, project, url, job_role, birthdate, admission_date } = data;
+
+      const dataPost = {
+        job_role,
+        admission_date,
+        birthdate,
+        project,
+        name,
+        url,
+      };
+
       await api.put(`navers/${storagedId}`, dataPost, {
         headers: {
           authorization: `Bearer ${token}`,
         },
       });
+      formRef.current.setErrors({});
       setModalOpen(true);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errorMessages = {};
+        error.inner.forEach((error) => {
+          errorMessages[error.path] = error.message;
+        });
+
+        formRef.current.setErrors(errorMessages);
+      }
     }
   }
 
@@ -90,10 +108,12 @@ function EditNaver() {
         admission_date: naver.admission_date,
         admission_dateValue: moment(naver.admission_date).fromNow(true),
       });
-    } else {
+    } else if (!naver) {
       getUserDetails(token, storagedId, naverInfo);
+    } else {
+      history.push('/home');
     }
-  }, [naver, naverInfo, storagedId, token]);
+  }, [history, naver, naverInfo, storagedId, token]);
 
   return (
     <FormComponent

@@ -1,12 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import * as moment from 'moment';
 import { MdClose, MdDelete, MdCreate } from 'react-icons/md';
 
 import { useNaver } from '../../context/ContextProvider';
 import ModalBlur from '../ModalBlur';
 import './styles.css';
 
-function ModalUserInfo({ action, data, deleteFunc, deleteModal }) {
+function ModalUserInfo({ action, data, deleteModal }) {
   const { handleNaver } = useNaver();
   const history = useHistory();
 
@@ -31,10 +32,10 @@ function ModalUserInfo({ action, data, deleteFunc, deleteModal }) {
             <p>{data.job_role}</p>
 
             <h3>Idade</h3>
-            <p>{data.birthdate}</p>
+            <p>{2020 - moment(data.birthdate).format('YYYY')} anos</p>
 
             <h3>Tempo de Empresa</h3>
-            <p>{data.birthdate}</p>
+            <p>{moment(data.admission_date).fromNow(true)}</p>
 
             <h3>Projetos que participou</h3>
             <p>{data.project}</p>

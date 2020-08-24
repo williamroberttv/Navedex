@@ -30,7 +30,9 @@
     flex-direction: column-reverse;
   }
   .modal-title h1 {
-    width: 30px;
+    margin-top: 30px;
+    width: 100%;
+    font-size: 1.8rem;
     text-align: center;
   }
   .modal p {

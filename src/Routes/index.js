@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
+import Route from './route';
 import Login from '../pages/Login';
 import Home from '../pages/Home';
 import AddNaver from '../pages/AddNaver';
@@ -10,9 +11,9 @@ function Routes() {
   return (
     <BrowserRouter>
       <Route exact path="/" component={Login} />
-      <Route path="/home" component={Home} />
-      <Route path="/add" component={AddNaver} />
-      <Route path="/edit" component={EditNaver} />
+      <Route path="/home" isPrivate component={Home} />
+      <Route path="/add" isPrivate component={AddNaver} />
+      <Route path="/edit" isPrivate component={EditNaver} />
     </BrowserRouter>
   );
 }

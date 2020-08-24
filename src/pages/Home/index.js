@@ -57,6 +57,7 @@ function Home() {
         },
       });
       setModalConfirmDelete(true);
+      getNavers(token);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +65,7 @@ function Home() {
 
   useEffect(() => {
     getNavers(token);
-  }, [token, navers]);
+  }, [token]);
 
   return (
     <div className="home-page">

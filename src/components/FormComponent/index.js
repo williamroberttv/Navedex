@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { MdNavigateBefore } from 'react-icons/md';
 import { Form } from '@unform/web';
 
@@ -10,15 +10,18 @@ import './styles.css';
 function FormComponent({ title, submitFunc, children, formRef, dateFunc }) {
   const [typeOfInputDate, setTypeOfInputDate] = useState(false);
   const [typeOfInputBirthdate, setTypeOfInputBirthdate] = useState(false);
+  const history = useHistory();
+  function handleNavigateBack() {
+    history.push('/home');
+    localStorage.removeItem('id');
+  }
 
   return (
     <div className="form-page">
       <Header />
       <div>
         <div className="form-page-title">
-          <Link to="/home">
-            <MdNavigateBefore size={38} />
-          </Link>
+          <MdNavigateBefore size={38} onClick={handleNavigateBack} />
           <h1>{title} Naver</h1>
         </div>
         <Form ref={formRef && formRef} className="form" onSubmit={submitFunc}>
