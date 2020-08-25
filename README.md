@@ -9,7 +9,7 @@
 
 ## :bookmark: Sobre
 
-O <strong>Navedex</strong> é uma aplicação Web que para visualização e criação dos navers, possuindo informações como: nomes, idades, cargos, tempo de empresa e projetos que participou..
+O <strong>Navedex</strong> é uma aplicação Web para visualização e criação dos navers, possuindo informações como: nomes, idades, cargos, tempo de empresa e projetos que participou..
 
 
 <a id="tecnologias-utilizadas"></a>
