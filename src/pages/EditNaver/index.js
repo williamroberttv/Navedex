@@ -13,26 +13,30 @@ function EditNaver() {
   const history = useHistory();
   const formRef = useRef();
   const { naver } = useNaver();
-  const storagedId = localStorage.getItem('id');
   const token = localStorage.getItem('token');
   const [modalOpen, setModalOpen] = useState(false);
-  const [naverInfo, setNaverInfo] = useState({});
 
   async function changeValue(dataToTransform, dataToSubmit, setToFalse) {
-    const inputValue = await formRef.current.getFieldValue(dataToTransform);
-
-    await setToFalse(false);
-    formRef.current.setFieldValue(
-      dataToSubmit,
-      moment(inputValue).format('DD/MM/YYYY')
-    );
-
     if (dataToTransform === 'birthdateValue') {
+      const inputValue = await formRef.current.getFieldValue(dataToTransform);
+
+      await setToFalse(false);
+      formRef.current.setFieldValue(
+        dataToSubmit,
+        moment(inputValue).format('DD/MM/YYYY')
+      );
+
       formRef.current.setFieldValue(
         dataToTransform,
         2020 - moment(inputValue).format('YYYY')
       );
     } else {
+      const inputValue = await formRef.current.getFieldValue(dataToTransform);
+      formRef.current.setFieldValue(
+        dataToSubmit,
+        moment(inputValue).format('DD/MM/YYYY')
+      );
+      await setToFalse(false);
       const inputValueDate = moment(inputValue).format('YYYY/MM/DD').split('/');
       formRef.current.setFieldValue(
         dataToTransform,
@@ -47,7 +51,7 @@ function EditNaver() {
         abortEarly: false,
       });
 
-      const { name, project, url, job_role, birthdate, admission_date } = data;
+      const { name, project, url, birthdate, admission_date, job_role } = data;
 
       const dataPost = {
         job_role,
@@ -58,7 +62,7 @@ function EditNaver() {
         url,
       };
 
-      await api.put(`navers/${storagedId}`, dataPost, {
+      await api.put(`navers/${naver.id}`, dataPost, {
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -73,27 +77,10 @@ function EditNaver() {
         });
 
         formRef.current.setErrors(errorMessages);
+      } else {
+        alert('Algo deu errado, tente novamente.');
       }
     }
-  }
-
-  async function getUserDetails(authToken, userId, userInfo) {
-    const response = await api.get(`navers/${userId}`, {
-      headers: {
-        authorization: `Bearer ${authToken}`,
-      },
-    });
-    setNaverInfo(response.data);
-    formRef.current.setData({
-      name: userInfo.name,
-      job_role: userInfo.job_role,
-      project: userInfo.project,
-      url: userInfo.url,
-      birthdateValue: 2020 - moment(userInfo.birthdate).format('YYYY'),
-      birthdate: userInfo.birthdate,
-      admission_date: userInfo.admission_date,
-      admission_dateValue: moment(userInfo.admission_date).fromNow(true),
-    });
   }
 
   useEffect(() => {
@@ -104,16 +91,14 @@ function EditNaver() {
         project: naver.project,
         url: naver.url,
         birthdateValue: 2020 - moment(naver.birthdate).format('YYYY'),
-        birthdate: naver.birthdate,
-        admission_date: naver.admission_date,
+        birthdate: moment(naver.birthdate).format('DD/MM/YYYY'),
+        admission_date: moment(naver.admission_date).format('DD/MM/YYYY'),
         admission_dateValue: moment(naver.admission_date).fromNow(true),
       });
-    } else if (!naver) {
-      getUserDetails(token, storagedId, naverInfo);
     } else {
       history.push('/home');
     }
-  }, [history, naver, naverInfo, storagedId, token]);
+  }, [history, naver]);
 
   return (
     <FormComponent

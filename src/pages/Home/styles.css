@@ -28,7 +28,12 @@
   font-size: 1.4rem;
   margin: 35px 0;
 }
-.navers img {
+.navers .img-div {
+  max-width: 450px;
+  max-height: 450px;
+}
+.navers .img-div img {
+  height: 320px;
   width: 100%;
   filter: grayscale(100%);
 }

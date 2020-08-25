@@ -34,8 +34,8 @@
   .login-page {
     width: 50%;
   }
-  .input-section input,
-  .login-page button {
+  .login-section form .input-section input,
+  .login-section button {
     width: 250px;
   }
 }

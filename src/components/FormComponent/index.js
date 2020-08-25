@@ -13,7 +13,6 @@ function FormComponent({ title, submitFunc, children, formRef, dateFunc }) {
   const history = useHistory();
   function handleNavigateBack() {
     history.push('/home');
-    localStorage.removeItem('id');
   }
 
   return (

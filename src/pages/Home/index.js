@@ -34,7 +34,6 @@ function Home() {
 
   function handleEdit(naver) {
     handleNaver(naver);
-    localStorage.setItem('id', naver.id);
     history.push('/edit');
   }
 
@@ -59,7 +58,7 @@ function Home() {
       setModalConfirmDelete(true);
       getNavers(token);
     } catch (error) {
-      console.log(error);
+      alert('Algo deu errado, tente novamente.');
     }
   }
 
@@ -79,14 +78,16 @@ function Home() {
       <div className="main">
         {navers.map((naver) => (
           <div key={naver.id} className="navers">
-            <img
-              src={naver.url}
-              alt={`Foto de ${naver.name}`}
-              onClick={() => {
-                handleOpenModal(naver);
-                setNaverId(naver.id);
-              }}
-            />
+            <div className="img-div">
+              <img
+                src={naver.url}
+                alt={`Foto de ${naver.name}`}
+                onClick={() => {
+                  handleOpenModal(naver);
+                  setNaverId(naver.id);
+                }}
+              />
+            </div>
             <h3>{naver.name}</h3>
             <p>{naver.job_role}</p>
             <div className="buttons">
